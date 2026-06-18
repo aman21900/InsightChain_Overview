@@ -1,0 +1,141 @@
+SKU,category,product_name,quantity_on_hand,supplier_id,reorder_point
+AUTOMOTIVE-001,Automotive,Air Freshener,190,SUP-001,160
+AUTOMOTIVE-002,Automotive,Car Phone Mount,227,SUP-001,160
+AUTOMOTIVE-003,Automotive,Car Vacuum Cleaner,314,SUP-001,160
+AUTOMOTIVE-004,Automotive,Dashcam 4K,210,SUP-001,160
+AUTOMOTIVE-005,Automotive,Jump Starter Pack,216,SUP-002,160
+AUTOMOTIVE-006,Automotive,Seat Covers Universal,188,SUP-002,160
+AUTOMOTIVE-007,Automotive,Steering Wheel Cover,162,SUP-002,160
+AUTOMOTIVE-008,Automotive,Tire Inflator,266,SUP-002,160
+AUTOMOTIVE-009,Automotive,USB Car Charger,182,SUP-002,160
+AUTOMOTIVE-010,Automotive,Windshield Cleaner,332,SUP-002,160
+BEAUTY-001,Beauty & Personal Care,Electric Toothbrush,247,SUP-003,160
+BEAUTY-002,Beauty & Personal Care,Face Wash Gel,236,SUP-003,160
+BEAUTY-003,Beauty & Personal Care,Hair Dryer Pro,260,SUP-003,160
+BEAUTY-004,Beauty & Personal Care,Hyaluronic Acid Moisturizer,233,SUP-003,160
+BEAUTY-005,Beauty & Personal Care,Lip Balm Set,315,SUP-003,160
+BEAUTY-006,Beauty & Personal Care,Nail Kit,236,SUP-004,160
+BEAUTY-007,Beauty & Personal Care,Perfume Floral,217,SUP-004,160
+BEAUTY-008,Beauty & Personal Care,Shampoo Argan Oil,307,SUP-004,160
+BEAUTY-009,Beauty & Personal Care,Sunscreen SPF50,192,SUP-004,160
+BEAUTY-010,Beauty & Personal Care,Vitamin C Serum,318,SUP-004,160
+BOOKS-001,Books,Atomic Habits,171,SUP-005,160
+BOOKS-002,Books,Clean Code,206,SUP-005,160
+BOOKS-003,Books,Deep Work,171,SUP-005,160
+BOOKS-004,Books,Python Crash Course,327,SUP-005,160
+BOOKS-005,Books,System Design Interview,342,SUP-005,160
+BOOKS-006,Books,The Alchemist,350,SUP-006,160
+BOOKS-007,Books,The Lean Startup,189,SUP-006,160
+BOOKS-008,Books,The Pragmatic Programmer,286,SUP-006,160
+BOOKS-009,Books,Thinking Fast and Slow,249,SUP-006,160
+BOOKS-010,Books,Zero to One,257,SUP-006,160
+CLOTHING-001,Clothing & Apparel,Casual Sneakers,180,SUP-007,160
+CLOTHING-002,Clothing & Apparel,Classic White Tee,228,SUP-007,160
+CLOTHING-003,Clothing & Apparel,Formal Dress Shirt,259,SUP-007,160
+CLOTHING-004,Clothing & Apparel,Hoodie Pullover,206,SUP-008,160
+CLOTHING-005,Clothing & Apparel,Leather Belt,323,SUP-008,160
+CLOTHING-006,Clothing & Apparel,Running Shoes,156,SUP-009,160
+CLOTHING-007,Clothing & Apparel,Slim Fit Jeans,184,SUP-009,160
+CLOTHING-008,Clothing & Apparel,Sports Socks 6-Pack,270,SUP-010,160
+CLOTHING-009,Clothing & Apparel,Winter Jacket,290,SUP-011,160
+CLOTHING-010,Clothing & Apparel,Yoga Pants,342,SUP-012,160
+ELECTRONICS-001,Electronics,Bluetooth Speaker,227,SUP-013,160
+ELECTRONICS-002,Electronics,Gaming Mouse RGB,333,SUP-013,160
+ELECTRONICS-003,Electronics,LED Desk Lamp,207,SUP-013,160
+ELECTRONICS-004,Electronics,Mechanical Keyboard,247,SUP-014,160
+ELECTRONICS-005,Electronics,Portable Charger 20000mAh,283,SUP-014,160
+ELECTRONICS-006,Electronics,Smart Plug 4-Pack,202,SUP-014,160
+ELECTRONICS-007,Electronics,Smart Watch Series 5,246,SUP-015,160
+ELECTRONICS-008,Electronics,USB-C Hub,214,SUP-015,160
+ELECTRONICS-009,Electronics,Webcam 4K,300,SUP-016,160
+ELECTRONICS-010,Electronics,Wireless Earbuds Pro,325,SUP-016,160
+FOOD-001,Food & Grocery,Coffee Beans 1kg,201,SUP-017,160
+FOOD-002,Food & Grocery,Dark Chocolate 85%,221,SUP-018,160
+FOOD-003,Food & Grocery,Energy Bars 12-Pack,287,SUP-019,160
+FOOD-004,Food & Grocery,Honey Raw Organic,295,SUP-020,160
+FOOD-005,Food & Grocery,Matcha Powder,168,SUP-020,160
+FOOD-006,Food & Grocery,Mixed Nuts 500g,277,SUP-020,160
+FOOD-007,Food & Grocery,Olive Oil Extra Virgin,317,SUP-020,160
+FOOD-008,Food & Grocery,Organic Green Tea,267,SUP-021,160
+FOOD-009,Food & Grocery,Protein Powder Vanilla,248,SUP-022,160
+FOOD-010,Food & Grocery,Quinoa 2kg,203,SUP-023,160
+HEALTH-001,Health & Wellness,Ashwagandha Extract,185,SUP-024,160
+HEALTH-002,Health & Wellness,CBD Gummies,227,SUP-024,160
+HEALTH-003,Health & Wellness,Collagen Peptides,228,SUP-024,160
+HEALTH-004,Health & Wellness,Magnesium Glycinate,322,SUP-024,160
+HEALTH-005,Health & Wellness,Melatonin 5mg,265,SUP-025,160
+HEALTH-006,Health & Wellness,Multivitamin Daily,216,SUP-025,160
+HEALTH-007,Health & Wellness,Omega-3 Fish Oil,233,SUP-025,160
+HEALTH-008,Health & Wellness,Probiotics 50B,261,SUP-025,160
+HEALTH-009,Health & Wellness,Vitamin D3 5000IU,306,SUP-025,160
+HEALTH-010,Health & Wellness,Zinc Lozenges,290,SUP-026,160
+HOME-001,Home & Kitchen,Air Fryer 5L,262,SUP-027,160
+HOME-002,Home & Kitchen,Blender Pro,321,SUP-028,160
+HOME-003,Home & Kitchen,Coffee Maker Drip,258,SUP-028,160
+HOME-004,Home & Kitchen,Electric Kettle,215,SUP-028,160
+HOME-005,Home & Kitchen,Knife Set 8pc,167,SUP-029,160
+HOME-006,Home & Kitchen,Mattress Topper,319,SUP-030,160
+HOME-007,Home & Kitchen,Non-stick Pan,154,SUP-031,160
+HOME-008,Home & Kitchen,Shower Curtain,164,SUP-032,160
+HOME-009,Home & Kitchen,Storage Containers,252,SUP-033,160
+HOME-010,Home & Kitchen,Wall Clock Modern,152,SUP-033,160
+JEWELRY-001,Jewelry & Accessories,Charm Bracelet,236,SUP-034,160
+JEWELRY-002,Jewelry & Accessories,Leather Wallet,259,SUP-034,160
+JEWELRY-003,Jewelry & Accessories,Minimalist Watch,151,SUP-034,160
+JEWELRY-004,Jewelry & Accessories,Phone Case Designer,171,SUP-034,160
+JEWELRY-005,Jewelry & Accessories,Ring Set 5pc,154,SUP-035,160
+JEWELRY-006,Jewelry & Accessories,Silk Scarf,202,SUP-035,160
+JEWELRY-007,Jewelry & Accessories,Sterling Silver Necklace,236,SUP-036,160
+JEWELRY-008,Jewelry & Accessories,Stud Earrings Gold,184,SUP-037,160
+JEWELRY-009,Jewelry & Accessories,Sunglasses UV400,203,SUP-037,160
+JEWELRY-010,Jewelry & Accessories,Tote Bag Canvas,315,SUP-037,160
+OFFICE-001,Office Supplies,Desk Organizer,222,SUP-038,160
+OFFICE-002,Office Supplies,Ergonomic Chair,198,SUP-038,160
+OFFICE-003,Office Supplies,File Folders 50pk,174,SUP-038,160
+OFFICE-004,Office Supplies,Notebook A5,263,SUP-038,160
+OFFICE-005,Office Supplies,Pen Set Premium,157,SUP-038,160
+OFFICE-006,Office Supplies,Standing Desk Converter,292,SUP-038,160
+OFFICE-007,Office Supplies,Stapler Heavy Duty,153,SUP-039,160
+OFFICE-008,Office Supplies,Sticky Notes Bulk,341,SUP-039,160
+OFFICE-009,Office Supplies,Whiteboard Markers,225,SUP-039,160
+OFFICE-010,Office Supplies,Wireless Mouse,221,SUP-039,160
+PET-001,Pet Supplies,Bird Cage Deluxe,283,SUP-040,160
+PET-002,Pet Supplies,Cat Litter Clumping,315,SUP-040,160
+PET-003,Pet Supplies,Chew Toy Set,303,SUP-040,160
+PET-004,Pet Supplies,Dog Food Premium 5kg,257,SUP-040,160
+PET-005,Pet Supplies,Dog Leash Retractable,224,SUP-040,160
+PET-006,Pet Supplies,Fish Tank 10L,344,SUP-041,160
+PET-007,Pet Supplies,Flea Collar,250,SUP-042,160
+PET-008,Pet Supplies,Interactive Cat Toy,207,SUP-042,160
+PET-009,Pet Supplies,Pet Carrier Soft,226,SUP-042,160
+PET-010,Pet Supplies,Pet Shampoo Natural,184,SUP-042,160
+SPORTS-001,Sports & Outdoors,Cycling Gloves,150,SUP-043,160
+SPORTS-002,Sports & Outdoors,Dumbbell Set 20kg,191,SUP-043,160
+SPORTS-003,Sports & Outdoors,Foam Roller,216,SUP-043,160
+SPORTS-004,Sports & Outdoors,Hiking Backpack,291,SUP-043,160
+SPORTS-005,Sports & Outdoors,Jump Rope Speed,264,SUP-044,160
+SPORTS-006,Sports & Outdoors,Pull-up Bar,288,SUP-044,160
+SPORTS-007,Sports & Outdoors,Resistance Bands Set,189,SUP-044,160
+SPORTS-008,Sports & Outdoors,Tennis Racket,283,SUP-044,160
+SPORTS-009,Sports & Outdoors,Water Bottle 1L,174,SUP-045,160
+SPORTS-010,Sports & Outdoors,Yoga Mat Non-slip,234,SUP-045,160
+TOYS-001,Toys & Games,Action Figure Set,287,SUP-046,160
+TOYS-002,Toys & Games,Art Supply Kit,342,SUP-046,160
+TOYS-003,Toys & Games,Board Game Strategy,172,SUP-046,160
+TOYS-004,Toys & Games,Card Game Party,153,SUP-046,160
+TOYS-005,Toys & Games,Educational Tablet,281,SUP-047,160
+TOYS-006,Toys & Games,LEGO City Set,283,SUP-048,160
+TOYS-007,Toys & Games,Outdoor Frisbee,274,SUP-048,160
+TOYS-008,Toys & Games,Puzzle 1000pc,317,SUP-048,160
+TOYS-009,Toys & Games,Remote Control Car,337,SUP-049,160
+TOYS-010,Toys & Games,Stuffed Animal Bear,151,SUP-049,160
+TRAVEL-001,Travel & Luggage,Compression Socks,194,SUP-050,160
+TRAVEL-002,Travel & Luggage,Eye Mask Sleep,344,SUP-050,160
+TRAVEL-003,Travel & Luggage,"Hardshell Luggage 24""",242,SUP-050,160
+TRAVEL-004,Travel & Luggage,Money Belt,226,SUP-050,160
+TRAVEL-005,Travel & Luggage,Packing Cubes 6-Set,176,SUP-050,160
+TRAVEL-006,Travel & Luggage,Passport Holder RFID,300,SUP-051,160
+TRAVEL-007,Travel & Luggage,Portable Scale,276,SUP-051,160
+TRAVEL-008,Travel & Luggage,Toiletry Bag,319,SUP-051,160
+TRAVEL-009,Travel & Luggage,Travel Adapter Universal,331,SUP-051,160
+TRAVEL-010,Travel & Luggage,Travel Pillow Memory Foam,325,SUP-051,160
