@@ -62,7 +62,7 @@ CONCURRENCY_CAP = 2         # How many concurrent threads will run at one time.
 
 MAX_FOLLOW_UP_QUESTIONS = 2 # Maximum number of follow up questions the agent will ask.
 
-MAX_INPUT_TOKENS = 2048     # Maximum number of tokens
+MAX_OUTPUT_TOKENS = 2048     # Maximum number of output token i.e. max length of the LLM's response.
 
 
 

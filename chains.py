@@ -1,5 +1,5 @@
 # Importing requirements from config.py & models.py
-from config import STRUCTURED_MODEL, GENERATION_MODEL, MAX_INPUT_TOKENS
+from config import STRUCTURED_MODEL, GENERATION_MODEL, MAX_OUTPUT_TOKENS
 from config import ChatPromptTemplate
 from config import ChatGroq
 from config import JsonOutputParser, StrOutputParser
@@ -128,7 +128,7 @@ def build_sql_chain():
         model=GENERATION_MODEL,
         temperature=0.01,
         api_key=os.getenv("GROQ_API_KEY"),
-        max_tokens=MAX_INPUT_TOKENS
+        max_tokens=MAX_OUTPUT_TOKENS
     )
     return prompt | llm | JsonOutputParser(pydantic_object=GenerationOutput)
 
@@ -214,7 +214,7 @@ CRITICAL OUTPUT RULES:
         model=GENERATION_MODEL,
         temperature=0.01,
         api_key=os.getenv("GROQ_API_KEY"),
-        max_tokens=MAX_INPUT_TOKENS
+        max_tokens=MAX_OUTPUT_TOKENS
     )
     return prompt | llm | JsonOutputParser(pydantic_object=GenerationOutput)
 

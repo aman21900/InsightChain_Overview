@@ -66,7 +66,7 @@ The whole pipeline runs in a Gradio web UI. No BI tool expertise required. No SQ
 
 - **Schema Agnostic & Schema-aware, not schema-dumping.** — </br>  Instead of stuffing the full database schema into every prompt, a RAG layer retrieves only the tables and columns relevant to the current question — this is what lets the architecture scale toward large schemas (tens of tables) without blowing the token budget.
 
-- **Insight generation folded into SQL generation** — </br>  The same call that writes the query also writes the 2–3 bullet insights, avoiding an extra LLM round-trip.
+- **Individual insight generation.** — </br> For each data table which is generated as a part of dashboard, 2-3 insightful and actionable comments are also included.
 
 - **Persistant Vectorstore and db to save execution time** — </br>  Instead of creating a new vectorstore each time the program runs, ChromaDB creates a persistant vectorstore which is setup as the files are loaded for the first time. [See more in: [Adding Your Data](#adding-your-data)]
 
@@ -265,6 +265,16 @@ data/
 - Mixed numeric/string columns are handled automatically by Pandas
 - There is no limit on the number of files or rows, but very large tables (> 500k rows) will slow down the vectorstore index build
 
+> Note: 
+> 1. Please make sure to **not use files containing PII values**, 
+> as some sample columns are given to LLM during schema context generation — through Groq API.
+> Please refer: [Security Limitations](#security-limitations).
+> 2. It is generally not recommended to use PII data to even create local vectorstores.
+> As important data could be reverse engineered from the vectorstore.
+> 3. The sole purpose of passing sample rows is to just improve the context quality.
+> It can be removed entirely, and the LLM models can work with interpreted meaning 
+> of the column and table names to establish schema context.
+
 ### DOCX files (unstructured documents → semantic queries)
 
 Drop any `.docx` files into the `documents/` folder. These are chunked (~500 words, 50-word overlap) and indexed alongside the schema, enabling the system to answer qualitative questions grounded in your documents — policies, SOPs, supplier agreements, etc.
@@ -340,7 +350,7 @@ The maximum number of sub-questions is controlled by `MAX_SUBQUESTIONS` in `conf
 For each SQL-routed sub-question:
 
 1. **Column hints** are retrieved from the vectorstore — the semantically closest column entries to the question, used as grounding hints for the LLM
-2. The **SQL generation chain** produces a JSON object: `reasoning` (step-by-step column verification), `sql_query`, `chart_code`, `insight`
+2. The **SQL generation chain** produces a JSON object: `reasoning` (step-by-step column verification), `sql_query`, & `chart_code`.
 3. The **SQLPostProcessor** applies deterministic fixes — currently handles `ORDER BY` inside `UNION ALL` branches (a recurring LLM anti-pattern)
 4. The **SQLGuardrailValidator** checks the query is a plain `SELECT`, contains no forbidden keywords, and is a single statement
 5. The query is **executed** against SQLite
@@ -354,6 +364,9 @@ For each SEMANTIC-routed sub-question:
 
 1. The top-15 most relevant documents are retrieved from ChromaDB (column entries, schema descriptions, and DOCX chunks combined)
 2. The semantic LLM answers the question grounded in the retrieved context, with explicit instructions not to fabricate numbers
+
+### Individual Insight Generation
+For each subsequent table obtained through the execution of generated SQL queries, 2-3 insightful and actionable comments are also generated.
 
 ### Sufficiency Check
 
@@ -409,18 +422,19 @@ An explicit CONVERGENCE rule was added: "Propose exactly ONE corrected query in 
 
 All tunable constants live in `config.py`:
 
-| Constant | Default | Description |
-|---|---|---|
-| `STRUCTURED_MODEL` | `llama-3.3-70b-versatile` | Model for strict JSON tasks (decomposition, sufficiency) |
-| `GENERATION_MODEL` | `llama-3.1-8b-instant` | Model for generation tasks (SQL, chart code, narrative) |
-| `MAX_SUBQUESTIONS` | `3` | Maximum sub-questions per user query |
+| Constant                  | Default | Description |
+|---------------------------|---|---|
+| `STRUCTURED_MODEL`        | `llama-3.3-70b-versatile` | Model for strict JSON tasks (decomposition, sufficiency) |
+| `GENERATION_MODEL`        | `llama-3.1-8b-instant` | Model for generation tasks (SQL, chart code, narrative) |
+| `MAX_SUBQUESTIONS`        | `3` | Maximum sub-questions per user query |
 | `MAX_FOLLOW_UP_QUESTIONS` | `2` | Maximum sufficiency follow-up rounds |
-| `CONCURRENCY_CAP` | `2` | Maximum parallel sub-question threads |
-| `SCHEMA_CACHE_TTL` | `300` | Schema context cache lifetime in seconds (5 minutes) |
-| `SPREADSHEETS_DIR` | `./data` | Directory the system watches for CSV files |
-| `DOCUMENTS_DIR` | `./documents` | Directory the system watches for DOCX files |
-| `DB_PATH` | `./db/operations_analytics.db` | SQLite database path |
-| `CHROMA_PATH` | `./chroma_index/vectorstore` | ChromaDB persistence directory |
+| `CONCURRENCY_CAP`         | `2` | Maximum parallel sub-question threads |
+| `MAX_OUTPUT_TOKENS`       | `2048` | Maximum length of LLM's generated response (output tokens)|
+| `SCHEMA_CACHE_TTL`        | `300` | Schema context cache lifetime in seconds (5 minutes) |
+| `SPREADSHEETS_DIR`        | `./data` | Directory the system watches for CSV files |
+| `DOCUMENTS_DIR`           | `./documents` | Directory the system watches for DOCX files |
+| `DB_PATH`                 | `./db/operations_analytics.db` | SQLite database path |
+| `CHROMA_PATH`             | `./chroma_index/vectorstore` | ChromaDB persistence directory |
 
 **Model swap:** To use a different Groq-hosted model, update `STRUCTURED_MODEL` or `GENERATION_MODEL` in `config.py`. See [Groq's model list](https://console.groq.com/docs/models) for available options. The system can also be adapted to use HuggingFace Inference Endpoints — the commented-out imports in `config.py` and `chains.py` show the original HuggingFace configuration.
 
