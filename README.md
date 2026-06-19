@@ -67,8 +67,6 @@ The whole pipeline runs in a Gradio web UI. No BI tool expertise required. No SQ
 
 - **Schema Agnostic & Schema-aware, not schema-dumping.** — </br>  Instead of stuffing the full database schema into every prompt, a RAG layer retrieves only the tables and columns relevant to the current question — this is what lets the architecture scale toward large schemas (tens of tables) without blowing the token budget.
 
-- **Insight generation folded into SQL generation** — </br>  The same call that writes the query also writes the 2–3 bullet insights, avoiding an extra LLM round-trip.
-
 - **Persistant Vectorstore and db to save execution time** — </br>  Instead of creating a new vectorstore each time the program runs, ChromaDB creates a persistant vectorstore which is setup as the files are loaded for the first time. [See more in: [Adding Your Data](#adding-your-data)]
 
 - **A Unified Vectorstore** — </br>  A single ChromaDB collection indexes three fundamentally different types of content, unified under a metadata tagging system.
