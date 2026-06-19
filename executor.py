@@ -8,6 +8,25 @@ from database import DatabaseManager
 from guardrails import SQLGuardrailValidator, SafeChartExecutor
 from models import SubQuestions
 
+
+def _generate_mini_insight(df: Optional[pd.DataFrame], sub_question: str) -> Tuple[str, str]:
+    # Mini Insight Generation for the resulting df
+    if df is None:
+        return None, f"No Table Received."
+    if df.empty:
+        return None, f"SQL query could not fetch data."
+    else:
+        try:
+            mini_insight_raw = singletons._mini_insight.invoke({
+                "retrieved_table_data": df,
+                "sub_question": sub_question
+            })
+            print(f"[Mini Insight] {mini_insight_raw}")
+            return mini_insight_raw, None
+        except Exception as e:
+            return None, f"Mini Insight generation failed: {e}"
+
+
 def _validate_and_execute(sql_query: str) -> Tuple[Optional[pd.DataFrame], str]:
     """
     Runs SQLGuardrailValidator then DatabaseManager.execute_query.
@@ -65,7 +84,6 @@ def execute_sub_question(sub_question: SubQuestions) -> Dict:
             print(f"[GEN RAW] {gen}")
             sql_query = gen.get("sql_query", "").strip()
             chart_code = gen.get("chart_code", "fig = None")
-            result["insight"] = gen.get("insight", "")
             result["sql"] = sql_query
         except Exception as e:
             result["error"] = f"SQL generation failed: {e}"
@@ -101,7 +119,6 @@ def execute_sub_question(sub_question: SubQuestions) -> Dict:
                 print(f"[REPAIR GEN RAW] {repair_gen}")
                 sql_query = repair_gen.get("sql_query", "").strip()
                 chart_code = repair_gen.get("chart_code", "fig=None")
-                result["insight"] = repair_gen.get("insight", result["insight"])
                 result["sql"] = sql_query
             except Exception as e:
                 result["error"] = f"SQL repair generation failed: {e}. Original error: {sql_run_error}"
@@ -125,6 +142,11 @@ def execute_sub_question(sub_question: SubQuestions) -> Dict:
 
         result["df"] = df
         print(f"  [SQL] {len(df)} rows returned. Columns: {df.columns.tolist()}")
+
+        # Generating mini insight for the resulting df
+        mini_insight_raw, insight_error = _generate_mini_insight(df, sub_question.question)
+        result["insight"] = mini_insight_raw
+        result["error"] = insight_error
 
         # Chart Generation
         # Inject actual column names into the chart code as a comment header so the

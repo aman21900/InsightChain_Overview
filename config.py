@@ -60,7 +60,9 @@ MAX_SUBQUESTIONS = 3        # Maximum sub-questions which the LLM can make on or
                             # Part of Iterative Chain-of-Thought (ICoT) process.
 CONCURRENCY_CAP = 2         # How many concurrent threads will run at one time.
 
-MAX_FOLLOW_UP_QUESTIONS = 2 # Maximum number fo follow up questions the agent will ask.
+MAX_FOLLOW_UP_QUESTIONS = 2 # Maximum number of follow up questions the agent will ask.
+
+MAX_INPUT_TOKENS = 2048     # Maximum number of tokens
 
 
 

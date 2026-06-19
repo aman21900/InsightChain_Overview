@@ -1,5 +1,5 @@
 # Importing requirements from config.py & models.py
-from config import STRUCTURED_MODEL, GENERATION_MODEL
+from config import STRUCTURED_MODEL, GENERATION_MODEL, MAX_INPUT_TOKENS
 from config import ChatPromptTemplate
 from config import ChatGroq
 from config import JsonOutputParser, StrOutputParser
@@ -87,13 +87,11 @@ def build_sql_chain():
                 does not exist in any table, set sql_query to empty string "".
       Step 5 — Write the final query plan with table aliases.
 
-    Your job is to produce a SINGLE JSON object with THREE fields:
+    Your job is to produce a SINGLE JSON object with ONLY TWO fields:
     - "sql_query": a valid SQLite SELECT query, or empty string "" if unanswerable with the schema
     - "chart_code": Plotly Python code using chart type '{chart_type}', operating on a DataFrame
       named 'df', assigning the result to 'fig'. Write exactly: fig = None if sql_query is empty
       or the result is not graphable.
-    - "insight": 2-3 analytical bullet points (each starting with •) interpreting what the query
-      result will likely show. If sql_query is empty, explain what data is missing.
 
     SQL RULES:
     - Use ONLY native SQLite syntax
@@ -116,9 +114,10 @@ def build_sql_chain():
     - Output ONLY one single JSON object — no markdown, no preamble, no explanation outside the JSON
     - Escape internal double quotes with \\"
     - Use \\n for newlines inside string values
+    - DO NOT split a single string value into multiple quoted segments across lines. Keep the value as a single enclosed string.  
     - The entire response must be parseable by json.loads()
 
-    {{"sql_query": "SELECT ...", "chart_code": "fig = px.{chart_type}(df, ...)", "insight": "• ...\\n• ...\\n• ..."}}
+    {{"sql_query": "SELECT ...", "chart_code": "fig = px.{chart_type}(df, ...)"}}
     """
 
     prompt = ChatPromptTemplate.from_messages([
@@ -129,7 +128,7 @@ def build_sql_chain():
         model=GENERATION_MODEL,
         temperature=0.01,
         api_key=os.getenv("GROQ_API_KEY"),
-        max_tokens=2048
+        max_tokens=MAX_INPUT_TOKENS
     )
     return prompt | llm | JsonOutputParser(pydantic_object=GenerationOutput)
 
@@ -188,9 +187,6 @@ reasoning brief; do not restate the full schema.
   MUST match the corrected query's SELECT aliases (they may differ from the failed query).
   fig = None if sql_query is empty or ungraphable.
  
-"insight" — 2-3 bullets (•) on what the corrected result will show. If sql_query is empty,
-  explain the missing data instead.
- 
 SQL RULES:
 - SQLite syntax, SELECT only — never DROP/DELETE/INSERT/UPDATE/ALTER/TRUNCATE
 - Only use a column in a table if it's listed under THAT table in the schema
@@ -205,9 +201,10 @@ SQL RULES:
  
 CRITICAL OUTPUT RULES:
 - ONE JSON object only, no markdown or extra text.
+- DO NOT split a single string value into multiple quoted segments across lines. Keep the value as a single enclosed string.
 - Escape internal quotes with \\", use \\n for newlines. Must be valid for json.loads().
  
-{{"sql_query": "SELECT ...", "chart_code": "fig = px.{chart_type}(df, ...)", "insight": "• ...\\n• ..."}}
+{{"sql_query": "SELECT ...", "chart_code": "fig = px.{chart_type}(df, ...)"}}
 """
     prompt = ChatPromptTemplate.from_messages([
         ("system", system_prompt),
@@ -217,7 +214,7 @@ CRITICAL OUTPUT RULES:
         model=GENERATION_MODEL,
         temperature=0.01,
         api_key=os.getenv("GROQ_API_KEY"),
-        max_tokens=2048
+        max_tokens=MAX_INPUT_TOKENS
     )
     return prompt | llm | JsonOutputParser(pydantic_object=GenerationOutput)
 
@@ -243,6 +240,42 @@ def build_semantic_chain():
         ("human", "Question: {sub_question}")
     ])
     llm = ChatGroq(model=GENERATION_MODEL, temperature=0.01, api_key=os.getenv("GROQ_API_KEY"))
+    return prompt | llm | StrOutputParser()
+
+
+
+def build_mini_insight_chain():
+    """To write insights about the tables created."""
+    system_prompt = """\
+    You are a senior business intelligence analyst.
+
+    RETRIEVED TABLE DATA:
+    {retrieved_table_data}
+
+    You have been given the data table in order to answer a user's question.
+    Write 2-3 analytical bullet points (each starting with •) explaining what can be inferred from the data.
+    If the table is empty, explain what data is missing.
+
+    RULES:
+    - Reference specific numbers from the table.
+    - Do NOT repeat the same insight across different bullets.
+    - Do NOT fabricate numbers not present in the data.
+    - Be analytical and actionable.
+    - Do not start with an introduction/preamble or any placeholders.
+    """
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", system_prompt),
+        ("human", "Question : {sub_question}")
+    ])
+    # llm = ChatHuggingFace(llm=HuggingFaceEndpoint(
+    #     repo_id=GENERATION_MODEL, temperature=0.3,
+    #     max_new_tokens=768, huggingfacehub_api_token=HF_TOKEN
+    # ))
+    llm = ChatGroq(
+        model=GENERATION_MODEL,
+        temperature=0.01,
+        api_key=os.getenv("GROQ_API_KEY")
+    )
     return prompt | llm | StrOutputParser()
 
 

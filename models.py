@@ -25,10 +25,6 @@ class GenerationOutput(BaseModel):
         default="",
         description="Plotly python code operating on the input dataframes, assigning the result to 'fig', Use 'fig == None' if not graphable."
     )
-    insight: str = Field(
-        default="",
-        description="2-3 analytical bullet points (starting with •) based on what the SQL query will likely return."
-    )
 
 
 
