@@ -1,15 +1,16 @@
 
-<div>
-    <img src="./assets/InsightChain_cropped_bg_removed.png" alt="InsightChain" width="300px">
+<div align="center">
+    <img src="./assets/InsightChain_cropped_bg_removed.png" alt="InsightChain" width="500px">
 </div>
 
+<p>
 <img src="https://img.shields.io/badge/Python-3.10_or_later-blue?logo=python&logoColor=white" alt="Python">
 <img src="https://img.shields.io/badge/LangChain-0.2_or_later-green?logo=chainlink&logoColor=white" alt="LangChain">
 <img src="https://img.shields.io/badge/LLM-Groq-orange?logo=groq&logoColor=white" alt="Groq">
 <img src="https://img.shields.io/badge/VectorStore-ChromaDB-purple" alt="ChromaDB">
 <img src="https://img.shields.io/badge/UI-Gradio-yellow?logo=gradio&logoColor=black" alt="Gradio">
 <img src="https://img.shields.io/badge/Database-SQLite-lightblue?logo=sqlite&logoColor=white" alt="SQLite">
-
+</p>
 
 > Ask questions about your data in plain English. Get a full multi-panel dashboard back — charts, tables, insights, and an executive summary — generated automatically.
 
