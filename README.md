@@ -14,11 +14,11 @@
 
 > Ask questions about your data in plain English. Get a full multi-panel dashboard back — charts, tables, insights, and an executive summary — generated automatically.
 
-**InsightChain** is natural-language BI system that takes a high-level business question, decomposes it into specific sub-questions, answers each one from a SQLite database (or a document corpus, for qualitative questions), and assembles the results into a rendered dashboard — charts, tables, per-panel insights, and an executive narrative — with no manual query writing or chart configuration required.
+**InsightChain** is a natural-language BI system that takes a high-level business question, decomposes it into specific sub-questions, answers each one from a SQLite database (or a document corpus, for qualitative questions), and assembles the results into a rendered dashboard — charts, tables, per-panel insights, and an executive narrative — with no manual query writing or chart configuration required.
 
 It's built as a small multi-agent pipeline: a planner, parallel SQL/semantic executors, a self-grading sufficiency check, and an insight synthesis step, all running on top of Groq-hosted Llama models, ChromaDB, and Plotly, served through a Gradio UI.
 
-***My Article on the detailed account of creation of this project, what challenges I faced, and my research to solve each problem, along with future architectural considerations using MCP servers and agent skills:***
+***My Article containing the detailed account of the creation of this project, what challenges I faced, and my research to solve each problem, along with future architectural considerations using MCP servers and agent skills:***
 
 
 ---
