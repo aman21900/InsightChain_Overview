@@ -85,8 +85,6 @@ The whole pipeline runs in a Gradio web UI. No BI tool expertise required. No SQ
 
 - **Guardrails at the execution boundary, not the prompt.** — </br>  LLM-generated SQL and chart code never run unchecked: every query is validated (`SELECT`-only, single-statement, keyword-blocklisted) before it touches SQLite, and every chart snippet executes inside a sandboxed `exec()` with a restricted builtins set.
 
-- **Deterministic SQL post-processing** — </br>  Known LLM anti-patterns fixed in pure Python before any LLM repair call.
-
 - **Iterative Chain of Thought (I-CoT) — </br>  Self-correcting, within limits.** The pipeline checks its own output for sufficiency and can ask itself one or two follow-up questions before writing the final summary/SQL — a small, capped agentic loop rather than a single-shot prompt.
 
 - **Full pipeline logging** — </br>  Every step logged in the UI for debugging and transparency.
@@ -134,7 +132,7 @@ InsightChain-auto-bi-dashboard/
 │
 ├── database.py             # CSV → SQLite ingestion, schema introspection, query execution
 ├── vectorstore.py          # ChromaDB index: schema descriptions, column metadata, DOCX chunks
-├── guardrails.py           # SQL validation, SQL post-processor, sandboxed chart executor
+├── guardrails.py           # SQL validation, sandboxed chart executor
 │
 ├── render_dashboard.py     # HTML renderer for tables, insights, and narrative
 ├── ui.py                   # Gradio Blocks layout and event wiring
@@ -149,17 +147,17 @@ InsightChain-auto-bi-dashboard/
 
 ### File Responsibilities at a Glance
 
-| File | What it owns |
-|---|---|
-| `config.py` | Single source of truth for all imports, paths, model names, and tunable constants |
-| `chains.py` | Every LLM prompt and chain — decomposer, SQL generator, repair chain, semantic, sufficiency, reducer |
-| `models.py` | Pydantic schemas that enforce structured output from every LLM call |
-| `guardrails.py` | All safety layers: SQL validation, deterministic SQL fixes, sandboxed `exec()` |
-| `database.py` | Everything that touches SQLite — loading CSVs, PRAGMA introspection, query execution |
-| `vectorstore.py` | Building and querying the ChromaDB index — schema descriptions, column entries, DOCX chunks |
-| `executor.py` | The per-sub-question execution loop — invokes the right chain, handles repair, runs chart code |
-| `pipeline.py` | Orchestrates stages: schema retrieval, decomposition, parallel execution, sufficiency, narrative |
-| `singletons.py` | Initialises all chain objects once and holds them as module-level global variables |
+| File | What it owns                                                                                                            |
+|---|-------------------------------------------------------------------------------------------------------------------------|
+| `config.py` | Single source of truth for all imports, paths, model names, and tunable constants                                       |
+| `chains.py` | Every LLM prompt and chain — decomposer, SQL generator, repair chain, semantic, sufficiency, reducer, individual insights |
+| `models.py` | Pydantic schemas that enforce structured output from every LLM call                                                     |
+| `guardrails.py` | All safety layers: SQL validation, sandboxed `exec()`                                                                   |
+| `database.py` | Everything that touches SQLite — loading CSVs, PRAGMA introspection, query execution                                    |
+| `vectorstore.py` | Building and querying the ChromaDB index — schema descriptions, column entries, DOCX chunks                             |
+| `executor.py` | The per-sub-question execution loop — invokes the right chain, handles repair, runs chart code                          |
+| `pipeline.py` | Orchestrates stages: schema retrieval, decomposition, parallel execution, sufficiency, narrative                        |
+| `singletons.py` | Initialises all chain objects once and holds them as module-level global variables                                      |
 
 ---
 
@@ -362,10 +360,10 @@ For each SQL-routed sub-question:
 
 1. **Column hints** are retrieved from the vectorstore — the semantically closest column entries to the question, used as grounding hints for the LLM
 2. The **SQL generation chain** produces a JSON object: `reasoning` (step-by-step column verification), `sql_query`, & `chart_code`.
-3. The **SQLPostProcessor** applies deterministic fixes — currently handles `ORDER BY` inside `UNION ALL` branches (a recurring LLM anti-pattern)
+3. The **Mandatory structured data rules inside prompts** applies deterministic fixes — currently handles `ORDER BY` inside `UNION ALL` branches (a recurring LLM anti-pattern)
 4. The **SQLGuardrailValidator** checks the query is a plain `SELECT`, contains no forbidden keywords, and is a single statement
 5. The query is **executed** against SQLite
-6. If execution fails, the **SQL repair chain** receives the failed query and the error message, and produces a corrected version — with a deliberately slim prompt (no verbose reasoning field) to prevent token-budget exhaustion
+6. If execution fails, the **SQL repair chain** receives the failed query and the error message, and produces a corrected version.
 7. The repaired query is executed a second time — if it still fails, the sub-question is marked as an error
 8. The **SafeChartExecutor** runs the chart code in a sandboxed `exec()` scope with dangerous builtins removed
 
@@ -422,10 +420,10 @@ These limitations were placed on LLMs to achieve 2 objectives:
 This is a hard guardrail against runaway generation. If the model enters a rumination loop, capping output tokens means the call fails fast with a parseable-JSON error rather than silently consuming thousands of tokens of reasoning text.
 
 ### The MAX+MIN pattern
-The MAX+MIN pattern was added to the prompt — giving the model the answer shape directly removes the need to search for it.
+The MAX+MIN pattern was added to the prompt — giving the model the answer shape directly removes the need to search for it. Each branch's ORDER BY and LIMIT are wrapped in their own subquery, keeping the sort inside the subquery where SQLite allows it, rather than on the individual UNION ALL branch where it does not
 
 ### Explicit rule against Convergence
-An explicit CONVERGENCE rule was added: "Propose exactly ONE corrected query in step 3. No 'however', 'but', 'wait', or alternative attempts — whatever you write is final, commit to it. Keep reasoning brief; do not restate the full schema."
+An explicit CONVERGENCE rule was added: An explicit anti-rumination instruction directing the model to commit to a single corrected query rather than hedge between alternatives.
 
 ---
 
