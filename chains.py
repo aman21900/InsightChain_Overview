@@ -167,8 +167,6 @@ FAILED QUERY:
 ERROR:
 {error_message}
  
-Produce a SINGLE JSON object with FOUR fields:
- 
 INTERNAL DIAGNOSIS — complete these steps mentally. Do NOT include them in your output:
   Step 1 — Read the error message and identify the exact cause.
   Step 2 — List every table you plan to use in the corrected query.
@@ -180,7 +178,9 @@ INTERNAL DIAGNOSIS — complete these steps mentally. Do NOT include them in you
 CONVERGENCE — read carefully: propose exactly ONE corrected query in step 3. No "however",
 "but", "wait", or alternative attempts — whatever you write is final, commit to it. Keep
 reasoning brief; do not restate the full schema.
- 
+
+Produce a SINGLE JSON object with two fields:
+
 "sql_query" — corrected valid SQLite SELECT, or "" if truly unanswerable.
  
 "chart_code" — Plotly code, chart type '{chart_type}', df='df', result='fig'. Column names
