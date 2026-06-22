@@ -18,7 +18,7 @@
 
 It's built as a small multi-agent pipeline: a planner, parallel SQL/semantic executors, a self-grading sufficiency check, and an insight synthesis step, all running on top of Groq-hosted Llama models, ChromaDB, and Plotly, served through a Gradio UI.
 
-***My Article containing the detailed account of the creation of this project, what challenges I faced, and my research to solve each problem, along with future architectural considerations using MCP servers and agent skills:***
+***My Article containing the detailed account of the creation of this project, what challenges I faced, and my research to solve each problem, along with future architectural considerations using MCP servers and agent skills: [WIP]***
 
 
 ---
