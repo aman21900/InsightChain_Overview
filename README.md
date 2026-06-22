@@ -501,10 +501,9 @@ Contributions are welcome. To contribute:
 5. Submit a pull request with a clear description of what changed and why
 
 **Good first issues:**
-- Adding a new deterministic SQL fix to `SQLPostProcessor.apply_all()` in `guardrails.py`
 - Expanding the chart type set in the decomposer prompt
 - Adding a PostgreSQL adapter to `DatabaseManager`
-
+- Adding a chain to give insights on charts.
 ---
 
 ## Acknowledgements
