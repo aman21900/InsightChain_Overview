@@ -38,7 +38,7 @@ It's built as a small multi-agent pipeline: a planner, parallel SQL/semantic exe
 - [Usage](#usage)
 - [Architecture Deep Dive](#architecture-deep-dive)
 - [Security Design](#security-design)
-- [Limitations Placed on LLM](#limitations-on-llm) 
+- [Limitations Placed on LLM](#limitations-placed-on-llm) 
 - [Configuration Reference](#configuration-reference)
 - [Limitations](#limitations)
 - [Roadmap](#roadmap)
@@ -71,9 +71,9 @@ The whole pipeline runs in a Gradio web UI. No BI tool expertise required. No SQ
 ---
 
 ## Key Features
-- **Automatic query decomposition and routing** — </br> Complex and context heavy questions are split into focused sub-questions, the LLM identifies whether a question (or subquestion) needs to be answered from tabular data (quantitative questions) or documents (qualitative questions), and based on this the LLM routes them through appropriate chains.
+- **Automatic query decomposition and routing** — </br> Complex and context-heavy questions are split into focused sub-questions, the LLM identifies whether a question (or subquestion) needs to be answered from tabular data (quantitative questions) or documents (qualitative questions), and based on this the LLM routes them through appropriate chains.
 
-- **Two separte retrieval-augmented tracks.** — </br>  Quantitative sub-questions go through a SQL-generation chain; qualitative ones are answered from sampled data rows<sup>*</sup> and indexed DOCX content via the same vectorstore.
+- **Two separate retrieval-augmented tracks.** — </br>  Quantitative sub-questions go through a SQL-generation chain; qualitative ones are answered from sampled data rows and indexed DOCX content via the same vectorstore.
 
 - **Schema Agnostic & Schema-aware, not schema-dumping.** — </br>  Instead of stuffing the full database schema into every prompt, a RAG layer retrieves only the tables and columns relevant to the current question — this is what lets the architecture scale toward large schemas (tens of tables) without blowing the token budget.
 
