@@ -60,12 +60,22 @@ It's built as a small multi-agent pipeline: a planner, parallel SQL/semantic exe
 The whole pipeline runs in a Gradio web UI. No BI tool expertise required. No SQL knowledge required.
 
 ## Screenshots
-</br>
-<div style="align-items: center; display: flex; flex-direction: column">
-    <img style="border-radius: 10px" src="./assets/ss1.png" alt="screenshot-1" width="1000px"></br></br>
-    <img style="border-radius: 10px" src="./assets/ss2.png" alt="screenshot-2" width="1000px"></br></br>
-    <img style="border-radius: 10px" src="./assets/ss3.png" alt="screenshot-3" width="1000px"></br></br>
-    <img style="border-radius: 10px" src="./assets/ss4.png" alt="screenshot-4" width="1000px"></br></br>
+<div align="center">
+  <picture>
+    <img src="./assets/ss1.png" alt="screenshot-1" width="1000">
+  </picture>
+  <br><br>
+  <picture>
+    <img src="./assets/ss2.png" alt="screenshot-2" width="1000">
+  </picture>
+  <br><br>
+  <picture>
+    <img src="./assets/ss3.png" alt="screenshot-3" width="1000">
+  </picture>
+  <br><br>
+  <picture>
+    <img src="./assets/ss4.png" alt="screenshot-4" width="1000">
+  </picture>
 </div>
 
 ---
